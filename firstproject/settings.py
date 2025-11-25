@@ -123,11 +123,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Auto load fixtures on every deploy (only for Render free plan)
+# Auto load fixture only on Render (safe method)
 import os
 if os.environ.get('RENDER'):
-    from django.core.management import call_command
-    from django.db.utils import OperationalError
-    try:
-        call_command('loaddata', 'students.json', verbosity=0)
-    except OperationalError:
-        pass  # ignore if table not created yet
+    FIXTURE_DIRS = [os.path.join(BASE_DIR, 'marks', 'fixtures')]
