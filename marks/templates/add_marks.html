@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Marks</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+        table, th, td { border: 1px solid black; border-collapse: collapse; padding: 8px; }
+        input, select { padding: 6px; width: 200px; }
+        .btn { padding: 10px 20px; background: green; color: white; border: none; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<h2>Add Exam Marks</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Select Student:</label><br>
+    <select name="student" required>
+        <option value="">---------</option>
+        {% for s in students %}
+            <option value="{{ s.id }}">{{ s.name }} (Roll: {{ s.roll_no }})</option>
+        {% endfor %}
+    </select>
+    <br><br>
+
+    <label>Select Exam:</label><br>
+    <select name="exam" required>
+        <option value="">---------</option>
+        {% for e in exams %}
+            <option value="{{ e.id }}">
+                {{ e.name }} — {{ e.session }} — {{ e.date }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <h3>Enter Subject Marks</h3>
+
+    <table>
+        <tr>
+            <th>Subject</th>
+            <th>Obtained</th>
+            <th>Max Mark</th>
+            <th>Grade</th>
+        </tr>
+
+        {% for s in "123456" %}
+        <tr>
+            <td><input type="text" name="subject" required></td>
+            <td><input type="number" name="obtained" required></td>
+            <td><input type="number" name="max_mark" required></td>
+            <td><input type="text" name="grade" required></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <button type="submit" class="btn">Save Marks</button>
+
+</form>
+
+</body>
+</html>
